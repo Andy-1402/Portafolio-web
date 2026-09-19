@@ -1,7 +1,20 @@
 /* ============================================================
-   Portafolio Personal — Andy
-   Hoja de estilos principal
-   Fase 1: tokens de diseño (variables) y estilos base
+   Portafolio Personal - Andy
+   Hoja de estilos principal (CSS puro, sin frameworks)
+
+   ÍNDICE
+   1. Design Tokens
+   2. Reset / Normalización
+   3. Estilos base
+   4. Utilidades
+   5. Layout general
+   6. Header y navegación
+   7. Componentes (botones, badges, cards, formularios)
+   8. Secciones de la página
+   9. Footer
+  10. Página Design System
+  11. Responsive / Media Queries
+  12. Preferencias de movimiento reducido
    ============================================================ */
 
 /* ------------------------------------------------------------
@@ -20,7 +33,23 @@
   --space-lg: 2rem;
   --radius-sm: 0.5rem;
   --radius-md: 1rem;
+
+  /* Tokens derivados: apoyan a los anteriores, no los sustituyen. */
+  --color-border: #334155;
+  --color-on-primary: #0b1120;   /* texto oscuro sobre fondo --color-primary */
+  --color-danger: #f87171;       /* errores de validación del formulario */
+  --radius-pill: 999px;          /* exclusivo de los badges */
+  --max-width: 1120px;
+  --header-height: 4.5rem;
+  --shadow-card: 0 18px 40px rgb(2 6 23 / 0.45);
+  --transition-base: 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Escala de formas documentada (Shape Consistency):
+   botones e inputs -> --radius-sm
+   tarjetas y superficies -> --radius-md
+   badges -> --radius-pill
+   No se usan otros radios en el proyecto. */
 
 /* ------------------------------------------------------------
    2. Reset / Normalización
@@ -64,11 +93,21 @@ select {
   color: inherit;
 }
 
+fieldset {
+  border: 0;
+  min-width: 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
 /* ------------------------------------------------------------
    3. Estilos base
    ------------------------------------------------------------ */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + var(--space-md));
 }
 
 body {
@@ -77,17 +116,37 @@ body {
   color: var(--color-text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 h1,
 h2,
 h3 {
-  line-height: 1.2;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+}
+
+h2 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+}
+
+h3 {
+  font-size: 1.125rem;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 a {
   color: var(--color-primary);
   text-decoration: none;
+  transition: color var(--transition-base);
 }
 
 a:hover,
@@ -97,7 +156,14 @@ a:focus-visible {
 
 :focus-visible {
   outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+code {
+  font-family: ui-monospace, 'SFMono-Regular', 'Cascadia Code', monospace;
+  font-size: 0.875em;
+  color: var(--color-primary);
 }
 
 /* ------------------------------------------------------------
@@ -115,25 +181,873 @@ a:focus-visible {
   border: 0;
 }
 
-/* ------------------------------------------------------------
-   5. Layout (pendiente Fase 2)
-   ------------------------------------------------------------ */
+/* Enlace de salto: oculto hasta recibir foco por teclado. */
+.skip-link {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  z-index: 100;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  transform: translateY(-200%);
+  transition: transform var(--transition-base);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+  color: var(--color-on-primary);
+}
 
 /* ------------------------------------------------------------
-   6. Componentes (pendiente Fase 2)
+   5. Layout general
+   ------------------------------------------------------------ */
+main > section {
+  width: min(100% - 2 * var(--space-lg), var(--max-width));
+  margin-inline: auto;
+  padding-block: clamp(3rem, 8vw, 5.5rem);
+}
+
+main > section + section {
+  border-top: 1px solid var(--color-border);
+}
+
+/* Encabezado de sección con acento lineal sobre el título. */
+main > section > h2 {
+  margin-bottom: var(--space-lg);
+  padding-left: var(--space-md);
+  border-left: 3px solid var(--color-primary);
+}
+
+/* ------------------------------------------------------------
+   6. Header y navegación (Flexbox)
+   ------------------------------------------------------------ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  min-height: var(--header-height);
+  padding: var(--space-md) var(--space-lg);
+  background-color: rgb(15 23 42 / 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+}
+
+.site-header__brand:hover,
+.site-header__brand:focus-visible {
+  color: var(--color-primary);
+}
+
+.site-nav__list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.site-nav__list a {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding-block: var(--space-sm);
+}
+
+.site-nav__list a:hover,
+.site-nav__list a:focus-visible,
+.site-nav__list a[aria-current='page'] {
+  color: var(--color-text);
+}
+
+/* Botón hamburguesa: sólo visible en móvil (ver media query). */
+.nav-toggle {
+  display: none;
+  position: relative;
+  width: 2.75rem;
+  height: 2.75rem;
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.nav-toggle__bar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1.25rem;
+  height: 2px;
+  background-color: var(--color-text);
+  transform: translate(-50%, -50%);
+  transition: background-color var(--transition-base);
+}
+
+.nav-toggle__bar::before,
+.nav-toggle__bar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-text);
+  transition: transform var(--transition-base), top var(--transition-base);
+}
+
+.nav-toggle__bar::before {
+  top: -0.375rem;
+}
+
+.nav-toggle__bar::after {
+  top: 0.375rem;
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle__bar {
+  background-color: transparent;
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle__bar::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.nav-toggle[aria-expanded='true'] .nav-toggle__bar::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* ------------------------------------------------------------
+   7. Componentes
    ------------------------------------------------------------ */
 
-/* Muestras de color del Design System.
-   El color de fondo lo inyecta js/main.js leyendo el token real de :root. */
+/* --- 7.1 Botones --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  min-height: 2.75rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--transition-base),
+              border-color var(--transition-base),
+              color var(--transition-base),
+              transform var(--transition-base);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* Primario: fondo de acento, texto oscuro, sin borde visible. */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background-color: var(--color-secondary);
+  color: var(--color-on-primary);
+}
+
+/* Secundario: contorno, fondo transparente. */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-text);
+  border-color: var(--color-secondary);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus-visible {
+  background-color: rgb(129 140 248 / 0.14);
+  color: var(--color-text);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* --- 7.2 Badges (píldoras de tecnología) --- */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.badge:hover {
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+/* --- 7.3 Formularios --- */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.form-field__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.form-field__input {
+  width: 100%;
+  padding: 0.75rem var(--space-md);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.form-field__input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.form-field__input:hover {
+  border-color: var(--color-text-muted);
+}
+
+.form-field__input:focus-visible {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgb(56 189 248 / 0.28);
+}
+
+textarea.form-field__input {
+  resize: vertical;
+  min-height: 8rem;
+}
+
+.form-field__input[aria-invalid='true'] {
+  border-color: var(--color-danger);
+}
+
+.form-field__error {
+  font-size: 0.8125rem;
+  color: var(--color-danger);
+  min-height: 1.25rem;
+}
+
+/* ------------------------------------------------------------
+   8. Secciones de la página
+   ------------------------------------------------------------ */
+
+/* --- 8.1 Hero (composición asimétrica) --- */
+.hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: clamp(var(--space-lg), 5vw, 4rem);
+  min-height: min(76dvh, 38rem);
+}
+
+.hero__title {
+  margin-bottom: var(--space-sm);
+}
+
+.hero__subtitle {
+  font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-lg);
+  max-width: 34ch;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.hero__figure {
+  max-width: 22rem;
+  margin-left: auto;
+}
+
+/* height:auto es obligatorio: los <img> llevan atributos width/height y,
+   sin él, ese alto gana sobre aspect-ratio. */
+.hero__figure img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+/* --- 8.2 Sobre mí --- */
+.about__text {
+  max-width: 68ch;
+  color: var(--color-text-muted);
+  font-size: 1.0625rem;
+}
+
+/* --- 8.3 Habilidades (CSS Grid) --- */
+.skills__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-lg);
+}
+
+.skill-group {
+  padding: var(--space-lg);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.skill-group__title {
+  margin-bottom: var(--space-md);
+  color: var(--color-primary);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.skill-group__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* --- 8.4 Proyectos (CSS Grid + tarjetas en Flexbox) --- */
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-lg);
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--transition-base),
+              transform var(--transition-base),
+              box-shadow var(--transition-base);
+}
+
+.project-card:hover,
+.project-card:focus-within {
+  border-color: var(--color-primary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+}
+
+.project-card__media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.project-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+}
+
+.project-card__description {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.project-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+/* margin-top:auto alinea los botones al pie aunque las tarjetas
+   tengan textos de distinta longitud. */
+.project-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-top: auto;
+  padding: 0 var(--space-lg) var(--space-lg);
+}
+
+/* --- 8.5 Contacto --- */
+.contact__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: clamp(var(--space-lg), 5vw, 4rem);
+  align-items: start;
+}
+
+.contact-form__fieldset {
+  padding: var(--space-lg);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.contact-form__legend {
+  padding-inline: var(--space-sm);
+  margin-left: calc(var(--space-sm) * -1);
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.contact-form__actions {
+  margin-top: var(--space-lg);
+}
+
+.contact-form__status {
+  margin-top: var(--space-md);
+  font-size: 0.875rem;
+  color: var(--color-primary);
+  min-height: 1.25rem;
+}
+
+.social__title {
+  margin-bottom: var(--space-md);
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.social__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.social__link {
+  display: block;
+  padding: var(--space-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-weight: 600;
+  transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.social__link:hover,
+.social__link:focus-visible {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* ------------------------------------------------------------
+   9. Footer
+   ------------------------------------------------------------ */
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  width: min(100% - 2 * var(--space-lg), var(--max-width));
+  margin-inline: auto;
+  padding-block: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+/* ------------------------------------------------------------
+   10. Página Design System
+   ------------------------------------------------------------ */
+.ds-intro,
+.ds-section {
+  width: min(100% - 2 * var(--space-lg), var(--max-width));
+  margin-inline: auto;
+  padding-block: clamp(2.5rem, 6vw, 4rem);
+}
+
+.ds-section {
+  border-top: 1px solid var(--color-border);
+}
+
+.ds-intro p {
+  max-width: 68ch;
+  color: var(--color-text-muted);
+}
+
+.ds-section > h2 {
+  margin-bottom: var(--space-sm);
+  padding-left: var(--space-md);
+  border-left: 3px solid var(--color-primary);
+}
+
+.ds-section__description {
+  max-width: 68ch;
+  margin-bottom: var(--space-lg);
+  color: var(--color-text-muted);
+}
+
+/* --- 10.1 Muestras de color --- */
+.ds-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-lg);
+}
+
+.ds-swatch {
+  padding: var(--space-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+/* El color de fondo lo inyecta js/main.js leyendo el token real de :root. */
 .ds-swatch__sample {
   display: block;
   width: 100%;
   height: 5rem;
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  border: 1px solid var(--color-text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.ds-swatch__name {
+  font-size: 0.9375rem;
   margin-bottom: var(--space-sm);
 }
 
+.ds-swatch__token,
+.ds-swatch__value {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+/* --- 10.2 Tipografía --- */
+.ds-type-scale {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.ds-type-scale__title {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ds-type-sample--h1 {
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.ds-type-sample--h2 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.ds-type-sample--h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.ds-type-sample--body {
+  max-width: 68ch;
+}
+
+.ds-type-sample--muted {
+  max-width: 68ch;
+  color: var(--color-text-muted);
+}
+
+/* --- 10.3 Componentes --- */
+.ds-components {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-lg);
+}
+
+.ds-component {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.ds-component__name {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-primary);
+}
+
+.ds-component__usage {
+  margin-top: auto;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+/* --- 10.4 Tabla de tokens --- */
+.ds-table {
+  width: 100%;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: 0.9375rem;
+}
+
+/* padding-inline evita que el radio del contenedor recorte la primera letra. */
+.ds-table__caption {
+  padding: 0 var(--space-md) var(--space-md);
+  text-align: left;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.ds-table th,
+.ds-table td {
+  padding: var(--space-md);
+  text-align: left;
+  vertical-align: top;
+}
+
+.ds-table thead th {
+  background-color: rgb(56 189 248 / 0.08);
+  color: var(--color-text);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ds-table tbody tr + tr th,
+.ds-table tbody tr + tr td {
+  border-top: 1px solid var(--color-border);
+}
+
+.ds-table tbody td {
+  color: var(--color-text-muted);
+}
+
+/* --- 10.5 Formulario de ejemplo --- */
+.ds-form-demo {
+  max-width: 34rem;
+  padding: var(--space-lg);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.ds-form-demo .form-field:last-child {
+  margin-bottom: 0;
+}
+
 /* ------------------------------------------------------------
-   7. Responsive / Media Queries (pendiente Fase 2)
+   11. Responsive / Media Queries
    ------------------------------------------------------------ */
+
+/* Tablet: el hero deja de ser asimétrico antes que el resto. */
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: var(--space-lg);
+  }
+
+  .hero__figure {
+    order: -1;
+    max-width: 18rem;
+    margin-left: 0;
+  }
+
+  .hero__figure img {
+    aspect-ratio: 1 / 1;
+  }
+
+  .contact__layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Móvil: una sola columna, navegación desplegable y toques de 44px. */
+@media (max-width: 768px) {
+  main > section,
+  .site-footer,
+  .ds-intro,
+  .ds-section {
+    width: min(100% - 2 * var(--space-md), var(--max-width));
+  }
+
+  main > section {
+    padding-block: clamp(2.5rem, 10vw, 3.5rem);
+  }
+
+  .site-header {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  /* Navegación táctil desplegable. */
+  .nav-toggle {
+    display: block;
+  }
+
+  .site-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .site-nav--open {
+    display: block;
+  }
+
+  .site-nav__list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .site-nav__list li + li {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .site-nav__list a {
+    display: flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-size: 1rem;
+  }
+
+  /* Una sola columna en todas las grillas. */
+  .skills__grid,
+  .projects__grid,
+  .ds-swatches,
+  .ds-components {
+    grid-template-columns: 1fr;
+  }
+
+  .skill-group,
+  .project-card__body,
+  .contact-form__fieldset,
+  .ds-form-demo,
+  .ds-type-scale,
+  .ds-component {
+    padding: var(--space-md);
+  }
+
+  .project-card__actions {
+    padding: 0 var(--space-md) var(--space-md);
+  }
+
+  /* Los botones ocupan el ancho disponible para facilitar el toque. */
+  .hero__actions .btn,
+  .project-card__actions .btn,
+  .contact-form__actions .btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .site-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  /* Tabla de tokens legible sin scroll horizontal. */
+  .ds-table,
+  .ds-table thead,
+  .ds-table tbody,
+  .ds-table tr,
+  .ds-table th,
+  .ds-table td {
+    display: block;
+  }
+
+  .ds-table thead {
+    display: none;
+  }
+
+  .ds-table tbody tr {
+    padding: var(--space-md);
+  }
+
+  .ds-table tbody tr + tr {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .ds-table th,
+  .ds-table td {
+    padding: 0 0 var(--space-sm);
+  }
+
+  .ds-table tbody tr + tr th,
+  .ds-table tbody tr + tr td {
+    border-top: 0;
+  }
+}
+
+/* ------------------------------------------------------------
+   12. Preferencias de movimiento reducido
+   ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .project-card:hover,
+  .project-card:focus-within,
+  .btn:active {
+    transform: none;
+  }
+}

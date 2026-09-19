@@ -12,3 +12,8 @@ Desktop.ini
 # Logs y temporales
 *.log
 tmp/
+
+# Artefactos de inspección local
+.playwright-mcp/
+*.png
+!assets/img/*.png

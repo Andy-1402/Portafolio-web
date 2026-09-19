@@ -14,7 +14,7 @@
 </head>
 <body>
 
-  <a class="skip-link visually-hidden" href="#contenido-principal">Saltar al contenido principal</a>
+  <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
 
   <!-- ==========================================================
        HEADER + NAVEGACIÓN
@@ -45,18 +45,25 @@
 
     <!-- ===== HERO ===== -->
     <section class="hero" id="inicio" aria-labelledby="hero-titulo">
-      <h1 class="hero__title" id="hero-titulo">Hola, soy Andy</h1>
-      <p class="hero__subtitle">Estudiante de Ingeniería en Software</p>
-      <p class="hero__actions">
-        <a class="button button--primary" href="#proyectos">Ver proyectos</a>
-        <a class="button button--secondary" href="#contacto">Contáctame</a>
-      </p>
+      <div class="hero__content">
+        <h1 class="hero__title" id="hero-titulo">Hola, soy Andy</h1>
+        <p class="hero__subtitle">Estudiante de Ingeniería en Software</p>
+        <p class="hero__actions">
+          <a class="btn btn-primary" href="#proyectos">Ver proyectos</a>
+          <a class="btn btn-secondary" href="#contacto">Contáctame</a>
+        </p>
+      </div>
+
+      <!-- TODO: reemplazar por una foto real de perfil, 800x1000 aprox. -->
+      <figure class="hero__figure">
+        <img src="assets/img/perfil.svg" alt="Retrato de Andy" width="800" height="1000">
+      </figure>
     </section>
 
     <!-- ===== SOBRE MÍ ===== -->
     <section class="about" id="sobre-mi" aria-labelledby="sobre-mi-titulo">
       <h2 id="sobre-mi-titulo">Sobre mí</h2>
-      <p>
+      <p class="about__text">
         Soy estudiante de Ingeniería en Software en la Universidad Estatal de Milagro con un fuerte
         enfoque en la arquitectura de sistemas y el desarrollo backend. Actualmente, me enfoco en
         diseñar e implementar soluciones robustas y escalables. Disfruto trabajando a lo largo de todo
@@ -76,44 +83,44 @@
         <article class="skill-group" aria-labelledby="skill-frontend">
           <h3 class="skill-group__title" id="skill-frontend">Frontend</h3>
           <ul class="skill-group__list">
-            <li>JavaScript</li>
-            <li>TypeScript</li>
-            <li>Angular</li>
-            <li>Next.js</li>
+            <li class="badge">JavaScript</li>
+            <li class="badge">TypeScript</li>
+            <li class="badge">Angular</li>
+            <li class="badge">Next.js</li>
           </ul>
         </article>
 
         <article class="skill-group" aria-labelledby="skill-backend">
           <h3 class="skill-group__title" id="skill-backend">Backend</h3>
           <ul class="skill-group__list">
-            <li>Python</li>
-            <li>Django</li>
-            <li>Node.js</li>
-            <li>Express</li>
+            <li class="badge">Python</li>
+            <li class="badge">Django</li>
+            <li class="badge">Node.js</li>
+            <li class="badge">Express</li>
           </ul>
         </article>
 
         <article class="skill-group" aria-labelledby="skill-bbdd">
           <h3 class="skill-group__title" id="skill-bbdd">Bases de Datos</h3>
           <ul class="skill-group__list">
-            <li>PostgreSQL</li>
-            <li>SQL Server</li>
+            <li class="badge">PostgreSQL</li>
+            <li class="badge">SQL Server</li>
           </ul>
         </article>
 
         <article class="skill-group" aria-labelledby="skill-cloud">
           <h3 class="skill-group__title" id="skill-cloud">Cloud / DevOps</h3>
           <ul class="skill-group__list">
-            <li>AWS Cloud Foundations</li>
-            <li>Docker</li>
+            <li class="badge">AWS Cloud Foundations</li>
+            <li class="badge">Docker</li>
           </ul>
         </article>
 
         <article class="skill-group" aria-labelledby="skill-testing">
           <h3 class="skill-group__title" id="skill-testing">Testing</h3>
           <ul class="skill-group__list">
-            <li>Cypress</li>
-            <li>Playwright</li>
+            <li class="badge">Cypress</li>
+            <li class="badge">Playwright</li>
           </ul>
         </article>
 
@@ -130,59 +137,74 @@
           <figure class="project-card__media">
             <img src="assets/img/placeholder.svg" alt="Vista previa del Sistema Médico desarrollado con Python y Django" width="640" height="360" loading="lazy">
           </figure>
-          <h3 class="project-card__title" id="proyecto-1">Sistema Médico con Python + Django</h3>
-          <p class="project-card__description">
-            Plataforma de gestión clínica con manejo de permisos por rol, persistencia en PostgreSQL
-            e integración con APIs de pago.
-          </p>
-          <ul class="project-card__tags">
-            <li>Python</li>
-            <li>Django</li>
-            <li>PostgreSQL</li>
-            <li>APIs de pago</li>
-          </ul>
-          <p class="project-card__links">
-            <a href="#" rel="noopener">Ver repositorio</a>
-          </p>
+
+          <div class="project-card__body">
+            <h3 class="project-card__title" id="proyecto-1">Sistema Médico con Python + Django</h3>
+            <p class="project-card__description">
+              Plataforma de gestión clínica con manejo de permisos por rol, persistencia en PostgreSQL
+              e integración con APIs de pago.
+            </p>
+            <ul class="project-card__tags">
+              <li class="badge">Python</li>
+              <li class="badge">Django</li>
+              <li class="badge">PostgreSQL</li>
+              <li class="badge">APIs de pago</li>
+            </ul>
+          </div>
+
+          <footer class="project-card__actions">
+            <a class="btn btn-primary" href="#" rel="noopener">Repositorio</a>
+            <a class="btn btn-secondary" href="#" rel="noopener">Demo</a>
+          </footer>
         </article>
 
         <article class="project-card" aria-labelledby="proyecto-2">
           <figure class="project-card__media">
             <img src="assets/img/placeholder.svg" alt="Vista previa de la aplicación Angular Country App" width="640" height="360" loading="lazy">
           </figure>
-          <h3 class="project-card__title" id="proyecto-2">Angular Country App</h3>
-          <p class="project-card__description">
-            Aplicación de consulta de países construida con Angular, basada en el consumo de APIs
-            externas y un diseño totalmente responsive.
-          </p>
-          <ul class="project-card__tags">
-            <li>Angular</li>
-            <li>TypeScript</li>
-            <li>Consumo de APIs</li>
-            <li>Responsive</li>
-          </ul>
-          <p class="project-card__links">
-            <a href="#" rel="noopener">Ver repositorio</a>
-          </p>
+
+          <div class="project-card__body">
+            <h3 class="project-card__title" id="proyecto-2">Angular Country App</h3>
+            <p class="project-card__description">
+              Aplicación de consulta de países construida con Angular, basada en el consumo de APIs
+              externas y un diseño totalmente responsive.
+            </p>
+            <ul class="project-card__tags">
+              <li class="badge">Angular</li>
+              <li class="badge">TypeScript</li>
+              <li class="badge">Consumo de APIs</li>
+              <li class="badge">Responsive</li>
+            </ul>
+          </div>
+
+          <footer class="project-card__actions">
+            <a class="btn btn-primary" href="#" rel="noopener">Repositorio</a>
+            <a class="btn btn-secondary" href="#" rel="noopener">Demo</a>
+          </footer>
         </article>
 
         <article class="project-card" aria-labelledby="proyecto-3">
           <figure class="project-card__media">
             <img src="assets/img/placeholder.svg" alt="Vista previa del framework de automatización de pruebas E2E" width="640" height="360" loading="lazy">
           </figure>
-          <h3 class="project-card__title" id="proyecto-3">Framework de Automatización E2E</h3>
-          <p class="project-card__description">
-            Framework de testing automatizado end-to-end con Cypress, integrado en un flujo de
-            CI/CD para validar regresiones en cada despliegue.
-          </p>
-          <ul class="project-card__tags">
-            <li>Cypress</li>
-            <li>Testing E2E</li>
-            <li>CI/CD</li>
-          </ul>
-          <p class="project-card__links">
-            <a href="#" rel="noopener">Ver repositorio</a>
-          </p>
+
+          <div class="project-card__body">
+            <h3 class="project-card__title" id="proyecto-3">Framework de Automatización E2E</h3>
+            <p class="project-card__description">
+              Framework de testing automatizado end-to-end con Cypress, integrado en un flujo de
+              CI/CD para validar regresiones en cada despliegue.
+            </p>
+            <ul class="project-card__tags">
+              <li class="badge">Cypress</li>
+              <li class="badge">Testing E2E</li>
+              <li class="badge">CI/CD</li>
+            </ul>
+          </div>
+
+          <footer class="project-card__actions">
+            <a class="btn btn-primary" href="#" rel="noopener">Repositorio</a>
+            <a class="btn btn-secondary" href="#" rel="noopener">Demo</a>
+          </footer>
         </article>
 
       </div>
@@ -191,53 +213,54 @@
     <!-- ===== CONTACTO ===== -->
     <section class="contact" id="contacto" aria-labelledby="contacto-titulo">
       <h2 id="contacto-titulo">Contacto</h2>
-      <p class="contact__intro">
-        ¿Tienes un proyecto o una oportunidad en mente? Escríbeme y te respondo lo antes posible.
-      </p>
 
-      <form class="contact-form" id="formulario-contacto" novalidate>
-        <fieldset class="contact-form__fieldset">
-          <legend class="contact-form__legend">Envíame un mensaje</legend>
+      <div class="contact__layout">
 
-          <p class="form-field">
-            <label class="form-field__label" for="nombre">Nombre</label>
-            <input class="form-field__input" type="text" id="nombre" name="nombre" autocomplete="name" placeholder="Tu nombre completo" required>
-            <small class="form-field__error" id="error-nombre" role="alert"></small>
-          </p>
+        <form class="contact-form" id="formulario-contacto" novalidate>
+          <fieldset class="contact-form__fieldset">
+            <legend class="contact-form__legend">Envíame un mensaje</legend>
 
-          <p class="form-field">
-            <label class="form-field__label" for="email">Correo electrónico</label>
-            <input class="form-field__input" type="email" id="email" name="email" autocomplete="email" placeholder="tucorreo@ejemplo.com" required>
-            <small class="form-field__error" id="error-email" role="alert"></small>
-          </p>
+            <p class="form-field">
+              <label class="form-field__label" for="nombre">Nombre</label>
+              <input class="form-field__input" type="text" id="nombre" name="nombre" autocomplete="name" placeholder="Tu nombre completo" required>
+              <small class="form-field__error" id="error-nombre" role="alert"></small>
+            </p>
 
-          <p class="form-field">
-            <label class="form-field__label" for="asunto">Asunto</label>
-            <input class="form-field__input" type="text" id="asunto" name="asunto" placeholder="Motivo del mensaje" required>
-            <small class="form-field__error" id="error-asunto" role="alert"></small>
-          </p>
+            <p class="form-field">
+              <label class="form-field__label" for="email">Correo electrónico</label>
+              <input class="form-field__input" type="email" id="email" name="email" autocomplete="email" placeholder="tucorreo@ejemplo.com" required>
+              <small class="form-field__error" id="error-email" role="alert"></small>
+            </p>
 
-          <p class="form-field">
-            <label class="form-field__label" for="mensaje">Mensaje</label>
-            <textarea class="form-field__input" id="mensaje" name="mensaje" rows="6" placeholder="Cuéntame en qué puedo ayudarte" required></textarea>
-            <small class="form-field__error" id="error-mensaje" role="alert"></small>
-          </p>
+            <p class="form-field">
+              <label class="form-field__label" for="asunto">Asunto</label>
+              <input class="form-field__input" type="text" id="asunto" name="asunto" placeholder="Motivo del mensaje" required>
+              <small class="form-field__error" id="error-asunto" role="alert"></small>
+            </p>
 
-          <p class="contact-form__actions">
-            <button class="button button--primary" type="submit">Enviar mensaje</button>
-          </p>
+            <p class="form-field">
+              <label class="form-field__label" for="mensaje">Mensaje</label>
+              <textarea class="form-field__input" id="mensaje" name="mensaje" rows="6" placeholder="Cuéntame en qué puedo ayudarte" required></textarea>
+              <small class="form-field__error" id="error-mensaje" role="alert"></small>
+            </p>
 
-          <p class="contact-form__status" id="estado-formulario" role="status" aria-live="polite"></p>
-        </fieldset>
-      </form>
+            <p class="contact-form__actions">
+              <button class="btn btn-primary" type="submit">Enviar mensaje</button>
+            </p>
 
-      <nav class="social" aria-label="Redes profesionales">
-        <h3 class="social__title">También puedes encontrarme en</h3>
-        <ul class="social__list">
-          <li><a href="https://github.com/AndyB2" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-        </ul>
-      </nav>
+            <p class="contact-form__status" id="estado-formulario" role="status" aria-live="polite"></p>
+          </fieldset>
+        </form>
+
+        <nav class="social" aria-label="Redes profesionales">
+          <h3 class="social__title">También puedes encontrarme en</h3>
+          <ul class="social__list">
+            <li><a class="social__link" href="https://github.com/Andy-1402" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            <li><a class="social__link" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          </ul>
+        </nav>
+
+      </div>
     </section>
 
   </main>
@@ -247,7 +270,7 @@
        ========================================================== -->
   <footer class="site-footer">
     <p class="site-footer__copy">
-      &copy; <time datetime="2026">2026</time> Andy — Portafolio personal.
+      &copy; <time datetime="2026">2026</time> Andy. Portafolio personal.
     </p>
     <p class="site-footer__note">
       Construido con HTML5 semántico, CSS puro y JavaScript Vanilla.

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="Espacio reservado para la foto de perfil">
+  <rect width="800" height="1000" fill="#1e293b"/>
+  <text x="400" y="486" fill="#f8fafc" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="600" text-anchor="middle">Foto de perfil</text>
+  <text x="400" y="534" fill="#94a3b8" font-family="Inter, system-ui, sans-serif" font-size="26" text-anchor="middle">800 x 1000</text>
+</svg>

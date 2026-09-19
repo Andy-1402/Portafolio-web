@@ -1,7 +1,6 @@
 /* ============================================================
-   Portafolio Personal — Andy
-   main.js — JavaScript Vanilla (sin librerías externas)
-   Fase 1: estructura base e interacciones mínimas
+   Portafolio Personal - Andy
+   main.js - JavaScript Vanilla (sin librerías externas)
    ============================================================ */
 
 'use strict';
