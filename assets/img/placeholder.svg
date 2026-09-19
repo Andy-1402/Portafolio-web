@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" role="img" aria-label="Imagen de proyecto pendiente">
-  <rect width="640" height="360" fill="#1e293b"/>
-  <rect x="0.5" y="0.5" width="639" height="359" fill="none" stroke="#38bdf8" stroke-opacity="0.35"/>
-  <text x="320" y="176" fill="#94a3b8" font-family="Inter, system-ui, sans-serif" font-size="24" font-weight="600" text-anchor="middle">Captura del proyecto</text>
-  <text x="320" y="208" fill="#94a3b8" font-family="Inter, system-ui, sans-serif" font-size="16" text-anchor="middle">640 × 360</text>
-</svg>
