@@ -1,30 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="100%" height="100%">
   <defs>
-    <linearGradient id="fondo" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#064e3b"/>
-      <stop offset="0.55" stop-color="#047857"/>
-      <stop offset="1" stop-color="#062b26"/>
+    <linearGradient id="gradCyp" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#1e293b" />
     </linearGradient>
-    <pattern id="puntos" width="26" height="26" patternUnits="userSpaceOnUse">
-      <circle cx="2" cy="2" r="1.3" fill="#ffffff" fill-opacity="0.08"/>
+    <pattern id="gridCyp" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
     </pattern>
   </defs>
+  
+  <!-- Fondo y Grid -->
+  <rect width="100%" height="100%" fill="url(#gradCyp)" />
+  <rect width="100%" height="100%" fill="url(#gridCyp)" />
+  
+  <!-- Icono: Escudo E2E y Código -->
+  <!-- Brackets -->
+  <path d="M 130 65 L 110 85 L 130 105" fill="none" stroke="rgba(110, 231, 183, 0.3)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 270 65 L 290 85 L 270 105" fill="none" stroke="rgba(110, 231, 183, 0.3)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Escudo -->
+  <path d="M 200 45 L 235 60 L 235 95 C 235 120 200 140 200 140 C 200 140 165 120 165 95 L 165 60 Z" fill="rgba(16, 185, 129, 0.2)" stroke="#6ee7b7" stroke-width="3" stroke-linejoin="round" />
+  
+  <!-- Check de validación -->
+  <path d="M 185 95 L 195 105 L 215 80" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
 
-  <rect width="640" height="360" fill="url(#fondo)"/>
-  <rect width="640" height="360" fill="url(#puntos)"/>
-
-  <!-- Líneas de código estilizadas -->
-  <g fill="#ffffff" fill-opacity="0.11">
-    <rect x="48" y="258" width="104" height="6" rx="3"/>
-    <rect x="48" y="276" width="156" height="6" rx="3"/>
-    <rect x="48" y="294" width="78" height="6" rx="3"/>
-  </g>
-  <rect x="164" y="258" width="38" height="6" rx="3" fill="#6ee7b7" fill-opacity="0.6"/>
-  <rect x="136" y="294" width="46" height="6" rx="3" fill="#a7f3d0" fill-opacity="0.45"/>
-
-  <text x="320" y="182" fill="#f0fdf4" text-anchor="middle"
-        font-family="Inter, 'Segoe UI', Roboto, system-ui, sans-serif"
-        font-size="54" font-weight="700" letter-spacing="6">CYPRESS E2E</text>
-
-  <rect x="288" y="208" width="64" height="4" rx="2" fill="#6ee7b7"/>
+  <!-- Texto -->
+  <text x="200" y="170" font-family="system-ui, sans-serif" font-weight="900" font-size="24" fill="#ffffff" text-anchor="middle" letter-spacing="4">CYPRESS E2E</text>
+  <rect x="175" y="185" width="50" height="3" fill="#6ee7b7" rx="1.5" />
 </svg>

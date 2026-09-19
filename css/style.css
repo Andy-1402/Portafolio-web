@@ -673,10 +673,12 @@ textarea.form-field__input {
   box-shadow: var(--shadow-card);
 }
 
+/* 2:1 es la proporción nativa de las tres portadas (viewBox 400x200).
+   Usarla evita que object-fit recorte los laterales del diseño. */
 .project-card__media img {
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 2 / 1;
   object-fit: cover;
   border-bottom: 1px solid var(--color-border);
 }
