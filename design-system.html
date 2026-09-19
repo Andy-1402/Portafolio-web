@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sistema de diseño del portafolio de Andy: paleta de color, tipografía, espaciado, radios y componentes base documentados con variables CSS.">
+  <meta name="author" content="Andy">
+  <title>Design System | Portafolio de Andy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <a class="skip-link visually-hidden" href="#contenido-principal">Saltar al contenido principal</a>
+
+  <!-- ==========================================================
+       HEADER + NAVEGACIÓN
+       ========================================================== -->
+  <header class="site-header">
+    <a class="site-header__brand" href="index.html">Andy</a>
+
+    <nav class="site-nav" aria-label="Navegación principal">
+      <ul class="site-nav__list">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="index.html#proyectos">Proyectos</a></li>
+        <li><a href="index.html#contacto">Contacto</a></li>
+        <li><a href="design-system.html" aria-current="page">Design System</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ==========================================================
+       CONTENIDO PRINCIPAL
+       ========================================================== -->
+  <main id="contenido-principal">
+
+    <!-- ===== INTRODUCCIÓN ===== -->
+    <section class="ds-intro" aria-labelledby="ds-titulo">
+      <h1 id="ds-titulo">Sistema de Diseño</h1>
+      <p>
+        Esta página documenta los tokens y componentes visuales del portafolio. Todos los valores
+        provienen de las variables CSS declaradas en <code>:root</code> dentro de
+        <code>css/style.css</code>, de modo que cualquier cambio en el token se refleja
+        automáticamente aquí y en el resto del sitio.
+      </p>
+    </section>
+
+    <!-- ===== COLORES ===== -->
+    <section class="ds-section" id="ds-colores" aria-labelledby="ds-colores-titulo">
+      <h2 id="ds-colores-titulo">Paleta de Color</h2>
+      <p class="ds-section__description">
+        Tema Dark / Tech. Cada muestra referencia su variable y su valor hexadecimal.
+      </p>
+
+      <ul class="ds-swatches">
+
+        <li class="ds-swatch">
+          <span class="ds-swatch__sample" data-token="--color-background" aria-hidden="true"></span>
+          <h3 class="ds-swatch__name">Background</h3>
+          <p class="ds-swatch__token"><code>--color-background</code></p>
+          <p class="ds-swatch__value"><code>#0f172a</code></p>
+        </li>
+
+        <li class="ds-swatch">
+          <span class="ds-swatch__sample" data-token="--color-surface" aria-hidden="true"></span>
+          <h3 class="ds-swatch__name">Surface</h3>
+          <p class="ds-swatch__token"><code>--color-surface</code></p>
+          <p class="ds-swatch__value"><code>#1e293b</code></p>
+        </li>
+
+        <li class="ds-swatch">
+          <span class="ds-swatch__sample" data-token="--color-primary" aria-hidden="true"></span>
+          <h3 class="ds-swatch__name">Primary</h3>
+          <p class="ds-swatch__token"><code>--color-primary</code></p>
+          <p class="ds-swatch__value"><code>#38bdf8</code></p>
+        </li>
+
+        <li class="ds-swatch">
+          <span class="ds-swatch__sample" data-token="--color-secondary" aria-hidden="true"></span>
+          <h3 class="ds-swatch__name">Secondary</h3>
+          <p class="ds-swatch__token"><code>--color-secondary</code></p>
+          <p class="ds-swatch__value"><code>#818cf8</code></p>
+        </li>
+
+        <li class="ds-swatch">
+          <span class="ds-swatch__sample" data-token="--color-text" aria-hidden="true"></span>
+          <h3 class="ds-swatch__name">Text</h3>
+          <p class="ds-swatch__token"><code>--color-text</code></p>
+          <p class="ds-swatch__value"><code>#f8fafc</code></p>
+        </li>
+
+        <li class="ds-swatch">
+          <span class="ds-swatch__sample" data-token="--color-text-muted" aria-hidden="true"></span>
+          <h3 class="ds-swatch__name">Text Muted</h3>
+          <p class="ds-swatch__token"><code>--color-text-muted</code></p>
+          <p class="ds-swatch__value"><code>#94a3b8</code></p>
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- ===== TIPOGRAFÍA ===== -->
+    <section class="ds-section" id="ds-tipografia" aria-labelledby="ds-tipografia-titulo">
+      <h2 id="ds-tipografia-titulo">Tipografía</h2>
+      <p class="ds-section__description">
+        Familia única <code>--font-primary</code>: <code>'Inter', system-ui, sans-serif</code>.
+      </p>
+
+      <article class="ds-type-scale">
+        <h3 class="ds-type-scale__title">Escala de encabezados</h3>
+        <p class="ds-type-sample ds-type-sample--h1">Encabezado nivel 1</p>
+        <p class="ds-type-sample ds-type-sample--h2">Encabezado nivel 2</p>
+        <p class="ds-type-sample ds-type-sample--h3">Encabezado nivel 3</p>
+        <p class="ds-type-sample ds-type-sample--body">
+          Párrafo base. El texto largo utiliza el color <code>--color-text</code> y los textos de
+          apoyo usan <code>--color-text-muted</code> para bajar la jerarquía visual.
+        </p>
+        <p class="ds-type-sample ds-type-sample--muted">
+          Texto secundario o de apoyo con <code>--color-text-muted</code>.
+        </p>
+      </article>
+    </section>
+
+    <!-- ===== BOTONES ===== -->
+    <section class="ds-section" id="ds-botones" aria-labelledby="ds-botones-titulo">
+      <h2 id="ds-botones-titulo">Botones</h2>
+      <p class="ds-section__description">
+        Variantes del componente <code>.button</code>, con radios de <code>--radius-sm</code> y
+        espaciado interno basado en <code>--space-sm</code> y <code>--space-md</code>.
+      </p>
+
+      <ul class="ds-components">
+        <li class="ds-component">
+          <h3 class="ds-component__name">Primario</h3>
+          <button class="button button--primary" type="button">Ver proyectos</button>
+          <p class="ds-component__usage">Acción principal de cada sección.</p>
+        </li>
+        <li class="ds-component">
+          <h3 class="ds-component__name">Secundario</h3>
+          <button class="button button--secondary" type="button">Contáctame</button>
+          <p class="ds-component__usage">Acción alternativa o de menor peso.</p>
+        </li>
+        <li class="ds-component">
+          <h3 class="ds-component__name">Deshabilitado</h3>
+          <button class="button button--primary" type="button" disabled>Enviando…</button>
+          <p class="ds-component__usage">Estado de espera durante el envío del formulario.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ===== ESPACIADO Y RADIOS ===== -->
+    <section class="ds-section" id="ds-espaciado" aria-labelledby="ds-espaciado-titulo">
+      <h2 id="ds-espaciado-titulo">Espaciado y Radios</h2>
+      <p class="ds-section__description">
+        Escala de espaciado y radios de borde reutilizados en todos los componentes.
+      </p>
+
+      <table class="ds-table">
+        <caption class="ds-table__caption">Tokens de espaciado y radio</caption>
+        <thead>
+          <tr>
+            <th scope="col">Token</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Uso previsto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><code>--space-sm</code></th>
+            <td>0.5rem</td>
+            <td>Separación entre elementos internos (etiqueta e input, tags).</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>--space-md</code></th>
+            <td>1rem</td>
+            <td>Padding de tarjetas y separación entre bloques de texto.</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>--space-lg</code></th>
+            <td>2rem</td>
+            <td>Separación entre secciones y márgenes de layout.</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>--radius-sm</code></th>
+            <td>0.5rem</td>
+            <td>Botones, inputs y etiquetas.</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>--radius-md</code></th>
+            <td>1rem</td>
+            <td>Tarjetas de proyecto y contenedores de superficie.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ===== FORMULARIOS ===== -->
+    <section class="ds-section" id="ds-formularios" aria-labelledby="ds-formularios-titulo">
+      <h2 id="ds-formularios-titulo">Campos de Formulario</h2>
+      <p class="ds-section__description">
+        Estructura base de los campos usados en la sección de contacto.
+      </p>
+
+      <form class="ds-form-demo" aria-label="Ejemplo de campos de formulario">
+        <p class="form-field">
+          <label class="form-field__label" for="ds-input-demo">Etiqueta de campo</label>
+          <input class="form-field__input" type="text" id="ds-input-demo" name="ds-input-demo" placeholder="Texto de ejemplo">
+        </p>
+        <p class="form-field">
+          <label class="form-field__label" for="ds-textarea-demo">Área de texto</label>
+          <textarea class="form-field__input" id="ds-textarea-demo" name="ds-textarea-demo" rows="4" placeholder="Mensaje de ejemplo"></textarea>
+        </p>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================
+       FOOTER
+       ========================================================== -->
+  <footer class="site-footer">
+    <p class="site-footer__copy">
+      &copy; <time datetime="2026">2026</time> Andy — Portafolio personal.
+    </p>
+    <p class="site-footer__note">
+      Documentación del sistema de diseño basada en variables CSS.
+    </p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
