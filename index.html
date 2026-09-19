@@ -34,6 +34,12 @@
         <li><a href="#proyectos">Proyectos</a></li>
         <li><a href="#contacto">Contacto</a></li>
         <li><a href="design-system.html">Design System</a></li>
+        <li>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false">
+            <span class="theme-toggle__icon" aria-hidden="true"></span>
+            <span class="theme-toggle__label">Tema claro</span>
+          </button>
+        </li>
       </ul>
     </nav>
   </header>
@@ -54,9 +60,8 @@
         </p>
       </div>
 
-      <!-- TODO: reemplazar por una foto real de perfil, 800x1000 aprox. -->
       <figure class="hero__figure">
-        <img src="assets/img/perfil.svg" alt="Retrato de Andy" width="800" height="1000">
+        <img src="assets/img/perfil.jpg" alt="Retrato de Andy" width="924" height="1600" fetchpriority="high">
       </figure>
     </section>
 
@@ -131,9 +136,18 @@
     <section class="projects" id="proyectos" aria-labelledby="proyectos-titulo">
       <h2 id="proyectos-titulo">Proyectos Destacados</h2>
 
+      <div class="projects__filters" role="group" aria-label="Filtrar proyectos por categoría">
+        <button class="btn btn-secondary filter-btn" type="button" data-filter="all" aria-pressed="true">Todos</button>
+        <button class="btn btn-secondary filter-btn" type="button" data-filter="frontend" aria-pressed="false">Frontend</button>
+        <button class="btn btn-secondary filter-btn" type="button" data-filter="backend" aria-pressed="false">Backend/Fullstack</button>
+        <button class="btn btn-secondary filter-btn" type="button" data-filter="testing" aria-pressed="false">Testing</button>
+      </div>
+
+      <p class="projects__status" id="estado-filtro" role="status" aria-live="polite"></p>
+
       <div class="projects__grid">
 
-        <article class="project-card" aria-labelledby="proyecto-1">
+        <article class="project-card" data-category="backend" aria-labelledby="proyecto-1">
           <figure class="project-card__media">
             <img src="assets/img/placeholder.svg" alt="Vista previa del Sistema Médico desarrollado con Python y Django" width="640" height="360" loading="lazy">
           </figure>
@@ -158,7 +172,7 @@
           </footer>
         </article>
 
-        <article class="project-card" aria-labelledby="proyecto-2">
+        <article class="project-card" data-category="frontend" aria-labelledby="proyecto-2">
           <figure class="project-card__media">
             <img src="assets/img/placeholder.svg" alt="Vista previa de la aplicación Angular Country App" width="640" height="360" loading="lazy">
           </figure>
@@ -183,7 +197,7 @@
           </footer>
         </article>
 
-        <article class="project-card" aria-labelledby="proyecto-3">
+        <article class="project-card" data-category="testing" aria-labelledby="proyecto-3">
           <figure class="project-card__media">
             <img src="assets/img/placeholder.svg" alt="Vista previa del framework de automatización de pruebas E2E" width="640" height="360" loading="lazy">
           </figure>

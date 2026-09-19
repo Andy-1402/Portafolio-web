@@ -38,11 +38,31 @@
   --color-border: #334155;
   --color-on-primary: #0b1120;   /* texto oscuro sobre fondo --color-primary */
   --color-danger: #f87171;       /* errores de validación del formulario */
+  --color-header-bg: rgb(15 23 42 / 0.88);
   --radius-pill: 999px;          /* exclusivo de los badges */
   --max-width: 1120px;
   --header-height: 4.5rem;
   --shadow-card: 0 18px 40px rgb(2 6 23 / 0.45);
   --transition-base: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-theme: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Tema claro: reescribe los mismos tokens, así ningún componente
+   necesita reglas propias para el cambio de tema.
+   --color-primary y --color-on-primary se invierten respecto al tema
+   oscuro porque #38bdf8 sobre fondo claro no alcanza el contraste AA. */
+body.light-theme {
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-primary: #0369a1;
+  --color-secondary: #4f46e5;
+  --color-text: #0f172a;
+  --color-text-muted: #475569;
+  --color-border: #cbd5e1;
+  --color-on-primary: #ffffff;
+  --color-danger: #dc2626;
+  --color-header-bg: rgb(248 250 252 / 0.88);
+  --shadow-card: 0 18px 40px rgb(15 23 42 / 0.12);
 }
 
 /* Escala de formas documentada (Shape Consistency):
@@ -117,6 +137,21 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  transition: var(--transition-theme);
+}
+
+/* Superficies sin transición propia. Los componentes que ya declaran una
+   (.btn, .badge, .project-card, .form-field__input, .social__link) incluyen
+   background-color y color en su propia regla, más abajo. */
+.site-header,
+.skill-group,
+.contact-form__fieldset,
+.ds-swatch,
+.ds-type-scale,
+.ds-component,
+.ds-table,
+.ds-form-demo {
+  transition: var(--transition-theme);
 }
 
 h1,
@@ -234,7 +269,7 @@ main > section > h2 {
   gap: var(--space-md);
   min-height: var(--header-height);
   padding: var(--space-md) var(--space-lg);
-  background-color: rgb(15 23 42 / 0.88);
+  background-color: var(--color-header-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
@@ -397,7 +432,8 @@ main > section > h2 {
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--color-text-muted);
-  transition: border-color var(--transition-base), color var(--transition-base);
+  transition: border-color var(--transition-base), color var(--transition-base),
+              background-color 0.3s ease;
 }
 
 .badge:hover {
@@ -405,7 +441,65 @@ main > section > h2 {
   color: var(--color-text);
 }
 
-/* --- 7.3 Formularios --- */
+/* --- 7.3 Toggle de tema --- */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.375rem 0.75rem;
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-theme);
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+/* Luna en tema oscuro: el recorte interior crea el creciente.
+   En tema claro el círculo queda lleno y hace de sol. */
+.theme-toggle__icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  box-shadow: inset -0.25rem 0 0 var(--color-background);
+  transition: var(--transition-theme), box-shadow 0.3s ease;
+}
+
+body.light-theme .theme-toggle__icon {
+  box-shadow: none;
+}
+
+/* --- 7.4 Filtros de proyectos --- */
+.projects__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.filter-btn[aria-pressed='true'] {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.projects__status {
+  margin-bottom: var(--space-lg);
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  min-height: 1.25rem;
+}
+
+/* --- 7.5 Formularios --- */
 .form-field {
   display: flex;
   flex-direction: column;
@@ -426,7 +520,8 @@ main > section > h2 {
   color: var(--color-text);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base),
+              background-color 0.3s ease, color 0.3s ease;
 }
 
 .form-field__input::placeholder {
@@ -541,9 +636,12 @@ textarea.form-field__input {
 }
 
 /* --- 8.4 Proyectos (CSS Grid + tarjetas en Flexbox) --- */
+/* auto-fill en vez de auto-fit: al filtrar puede quedar una sola tarjeta y
+   auto-fit colapsaría las pistas vacías, estirándola a todo el ancho.
+   auto-fill conserva las pistas, así la tarjeta mantiene su tamaño. */
 .projects__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: var(--space-lg);
 }
 
@@ -556,7 +654,13 @@ textarea.form-field__input {
   overflow: hidden;
   transition: border-color var(--transition-base),
               transform var(--transition-base),
-              box-shadow var(--transition-base);
+              box-shadow var(--transition-base),
+              background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Estado aplicado por el filtro de proyectos (js/main.js). */
+.project-card.is-hidden {
+  display: none;
 }
 
 .project-card:hover,
@@ -656,7 +760,8 @@ textarea.form-field__input {
   border-radius: var(--radius-sm);
   color: var(--color-text);
   font-weight: 600;
-  transition: border-color var(--transition-base), color var(--transition-base);
+  transition: border-color var(--transition-base), color var(--transition-base),
+              background-color 0.3s ease;
 }
 
 .social__link:hover,
@@ -959,6 +1064,13 @@ textarea.form-field__input {
     align-items: center;
     min-height: 2.75rem;
     font-size: 1rem;
+  }
+
+  .theme-toggle {
+    width: 100%;
+    min-height: 2.75rem;
+    margin-block: var(--space-sm);
+    font-size: 0.9375rem;
   }
 
   /* Una sola columna en todas las grillas. */
