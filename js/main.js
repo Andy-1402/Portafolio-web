@@ -123,7 +123,7 @@ function aplicarTema(tema) {
   const esClaro = tema === 'light';
   const boton = document.getElementById('theme-toggle');
 
-  document.body.classList.toggle('light-theme', esClaro);
+  document.documentElement.classList.toggle('light-theme', esClaro);
 
   if (boton) {
     boton.setAttribute('aria-pressed', String(esClaro));
@@ -150,6 +150,9 @@ function leerTemaGuardado() {
 }
 
 function initThemeToggle() {
+  /* El script inline del <head> ya aplicó la clase antes del primer pintado.
+     Esta llamada repite el cálculo para sincronizar la etiqueta del botón,
+     su aria-pressed y las muestras del design system. */
   aplicarTema(leerTemaGuardado());
 
   const boton = document.getElementById('theme-toggle');
@@ -157,7 +160,7 @@ function initThemeToggle() {
   if (!boton) return;
 
   boton.addEventListener('click', function () {
-    const nuevoTema = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+    const nuevoTema = document.documentElement.classList.contains('light-theme') ? 'dark' : 'light';
 
     aplicarTema(nuevoTema);
 

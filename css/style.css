@@ -50,8 +50,11 @@
 /* Tema claro: reescribe los mismos tokens, así ningún componente
    necesita reglas propias para el cambio de tema.
    --color-primary y --color-on-primary se invierten respecto al tema
-   oscuro porque #38bdf8 sobre fondo claro no alcanza el contraste AA. */
-body.light-theme {
+   oscuro porque #38bdf8 sobre fondo claro no alcanza el contraste AA.
+
+   La clase va sobre <html> y no sobre <body> para que el script inline
+   del <head> pueda aplicarla antes del primer pintado. */
+:root.light-theme {
   --color-background: #f8fafc;
   --color-surface: #ffffff;
   --color-primary: #0369a1;
@@ -474,7 +477,7 @@ main > section > h2 {
   transition: var(--transition-theme), box-shadow 0.3s ease;
 }
 
-body.light-theme .theme-toggle__icon {
+:root.light-theme .theme-toggle__icon {
   box-shadow: none;
 }
 

@@ -11,6 +11,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- Aplica el tema guardado antes del primer pintado para evitar el
+       parpadeo. Debe ir en el <head> y actuar sobre <html>, porque en este
+       punto <body> todavía no existe. La clave coincide con la de main.js. -->
+  <script>
+    (function () {
+      try {
+        var guardado = localStorage.getItem('portafolio-tema');
+        var esClaro = guardado === 'light' || (!guardado &&
+          window.matchMedia('(prefers-color-scheme: light)').matches);
+
+        if (esClaro) document.documentElement.classList.add('light-theme');
+      } catch (error) {
+        /* Almacenamiento bloqueado: se queda con el tema oscuro por defecto. */
+      }
+    })();
+  </script>
 </head>
 <body>
 
@@ -167,7 +184,7 @@
           </div>
 
           <footer class="project-card__actions">
-            <a class="btn btn-primary" href="#" rel="noopener">Repositorio</a>
+            <a class="btn btn-primary" href="https://github.com/Andy-1402" target="_blank" rel="noopener noreferrer">Repositorio</a>
             <a class="btn btn-secondary" href="#" rel="noopener">Demo</a>
           </footer>
         </article>
@@ -192,7 +209,7 @@
           </div>
 
           <footer class="project-card__actions">
-            <a class="btn btn-primary" href="#" rel="noopener">Repositorio</a>
+            <a class="btn btn-primary" href="https://github.com/Andy-1402" target="_blank" rel="noopener noreferrer">Repositorio</a>
             <a class="btn btn-secondary" href="#" rel="noopener">Demo</a>
           </footer>
         </article>
@@ -216,7 +233,7 @@
           </div>
 
           <footer class="project-card__actions">
-            <a class="btn btn-primary" href="#" rel="noopener">Repositorio</a>
+            <a class="btn btn-primary" href="https://github.com/Andy-1402" target="_blank" rel="noopener noreferrer">Repositorio</a>
             <a class="btn btn-secondary" href="#" rel="noopener">Demo</a>
           </footer>
         </article>
@@ -270,7 +287,7 @@
           <h3 class="social__title">También puedes encontrarme en</h3>
           <ul class="social__list">
             <li><a class="social__link" href="https://github.com/Andy-1402" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-            <li><a class="social__link" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a class="social__link" href="https://www.linkedin.com/in/andy-chafla-635527258" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
           </ul>
         </nav>
 
